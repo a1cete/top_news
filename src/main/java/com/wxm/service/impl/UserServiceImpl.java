@@ -2,9 +2,9 @@ package com.wxm.service.impl;
 
 import com.alibaba.druid.util.StringUtils;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.wxm.pojo.User;
+import com.wxm.pojo.vo.RegisterVo;
 import com.wxm.service.UserService;
 import com.wxm.mapper.UserMapper;
 import com.wxm.utils.JwtHelper;
@@ -13,16 +13,13 @@ import com.wxm.utils.Result;
 import com.wxm.utils.ResultCodeEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestHeader;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
  * @author WXM
  * @description 针对表【news_user】的数据库操作Service实现
- * @createDate 2024-05-10 15:16:35
  */
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, User>
@@ -76,12 +73,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     public Result checkUserName(String username) {
         LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(User::getUsername, username);
-        /*
-        User user = userMapper.selectOne(queryWrapper);
-        if (user == null) {
-            return Result.ok(null);
-        }
-        return Result.build(null, ResultCodeEnum.USERNAME_USED);*/
 
         Long l = userMapper.selectCount(queryWrapper);
         if (l > 0) {
@@ -105,7 +96,31 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
 
     }
 
+    @Override
+    public Result restPassword(RegisterVo registerVo) {
+        LambdaQueryWrapper<User> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        lambdaQueryWrapper.eq(User::getUid, registerVo.getUid());
+        User loginUser = userMapper.selectOne(lambdaQueryWrapper);
+        if (loginUser == null) {
+            return Result.build(null, ResultCodeEnum.USERNAME_ERROR);
+        }
+        if (!MD5Util.encrypt(registerVo.getUserPwd()).equals(loginUser.getUserPwd())) {
+            return Result.build(null, ResultCodeEnum.PASSWORD_ERROR);
+        }
+        int uid = registerVo.getUid();
+        String newPassword = MD5Util.encrypt(registerVo.getNewPassword());
+        userMapper.updateByUid(uid, newPassword);
+        return Result.ok(null);
 
+
+    }
+
+    @Override
+    public Boolean removeByUid(Integer uid) {
+
+        Boolean b = userMapper.deleteByUid(uid);
+        return b;
+    }
 }
 
 

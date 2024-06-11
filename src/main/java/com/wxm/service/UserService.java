@@ -2,8 +2,8 @@ package com.wxm.service;
 
 import com.wxm.pojo.User;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.wxm.pojo.vo.RegisterVo;
 import com.wxm.utils.Result;
-import org.springframework.web.bind.annotation.RequestHeader;
 
 /**
  * @author WXM
@@ -25,4 +25,7 @@ public interface UserService extends IService<User> {
 
     Result regist(User user);
 
+    Result restPassword(RegisterVo registerVo);
+
+    Boolean removeByUid(Integer uid);
 }

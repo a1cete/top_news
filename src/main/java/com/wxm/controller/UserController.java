@@ -2,6 +2,8 @@ package com.wxm.controller;
 
 import com.alibaba.druid.util.StringUtils;
 import com.wxm.pojo.User;
+import com.wxm.pojo.vo.RegisterVo;
+import com.wxm.pojo.vo.UidVo;
 import com.wxm.service.UserService;
 import com.wxm.utils.JwtHelper;
 import com.wxm.utils.Result;
@@ -17,27 +19,42 @@ import javax.swing.text.rtf.RTFEditorKit;
 @RequestMapping("user")
 @CrossOrigin//跨域
 public class UserController {
+
+    //从ioc容器中注入该类的服务层接口
     @Autowired
     private UserService userService;
 
+    //从ioc容器中注入token工具类
     @Autowired
     private JwtHelper jwtHelper;
 
+    //登陆接口
     @PostMapping("login")
     public Result login(@RequestBody User user) {
         Result result = userService.login(user);
         return result;
     }
 
+    //根据token获取用户信息
     @GetMapping("getUserInfo")
     public Result getUserInfo(@RequestHeader String token) {
         Result result = userService.getUserInfo(token);
         return result;
     }
 
+    //判断用户是否存在
     @PostMapping("checkUserName")
     public Result checkUserName(@RequestParam String username) {
         Result result = userService.checkUserName(username);
+
+        return result;
+    }
+
+
+    //重置密码接口
+    @PostMapping("restPassword")
+    public Result checkPassword(@RequestBody RegisterVo registerVo) {
+        Result result = userService.restPassword(registerVo);
 
         return result;
     }
@@ -48,14 +65,7 @@ public class UserController {
         return result;
     }
 
-    /**
-     * 修改业务
-     * 1.查询version版本
-     * 2.补全属性,修改时间 , 版本!
-     *
-     * @param
-     * @return
-     */
+    //判断用户是否登陆或者token是否过期
     @GetMapping("checkLogin")
     public Result checkLogin(@RequestHeader String token) {
         if (StringUtils.isEmpty(token) || jwtHelper.isExpiration(token)) {
@@ -65,6 +75,18 @@ public class UserController {
 
         return Result.ok(null);
 
+    }
+
+
+    //注销账户接口
+    @PostMapping("logOutAccount")
+    public Result logOutAccount(@RequestBody UidVo uidVo) {
+        String uid = uidVo.getUid();
+        Integer i = Integer.valueOf(uid);
+        System.out.println(i);
+        Boolean b = userService.removeByUid(i);
+        System.out.println(b);
+        return Result.ok(null);
     }
 }
 

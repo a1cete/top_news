@@ -5,16 +5,28 @@
 <mapper namespace="com.wxm.mapper.UserMapper">
 
     <resultMap id="BaseResultMap" type="com.wxm.pojo.User">
-            <id property="uid" column="uid" jdbcType="INTEGER"/>
-            <result property="username" column="username" jdbcType="VARCHAR"/>
-            <result property="userPwd" column="user_pwd" jdbcType="VARCHAR"/>
-            <result property="nickName" column="nick_name" jdbcType="VARCHAR"/>
-            <result property="version" column="version" jdbcType="INTEGER"/>
-            <result property="isDeleted" column="is_deleted" jdbcType="INTEGER"/>
+        <id property="uid" column="uid" jdbcType="INTEGER"/>
+        <result property="username" column="username" jdbcType="VARCHAR"/>
+        <result property="userPwd" column="user_pwd" jdbcType="VARCHAR"/>
+        <result property="nickName" column="nick_name" jdbcType="VARCHAR"/>
+        <result property="version" column="version" jdbcType="INTEGER"/>
+        <result property="isDeleted" column="is_deleted" jdbcType="INTEGER"/>
     </resultMap>
 
     <sql id="Base_Column_List">
         uid,username,user_pwd,
         nick_name,version,is_deleted
     </sql>
+
+    <update id="updateByUid">
+        update news_user
+        set user_pwd = #{newPassword}
+        where uid = #{uid}
+    </update>
+    <delete id="deleteByUid">
+        delete
+        from news_user
+        where uid = #{uid}
+
+    </delete>
 </mapper>

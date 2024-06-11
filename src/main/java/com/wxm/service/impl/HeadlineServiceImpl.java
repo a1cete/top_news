@@ -42,7 +42,6 @@ public class HeadlineServiceImpl extends ServiceImpl<HeadlineMapper, Headline>
         IPage<Headline> page = new Page<>(portalVo.getPageNum(), portalVo.getPageSize());
 
         //3.分页查询
-        //查询的结果 "pastHours":"3"   // 发布时间已过小时数 我们查询返回一个map
         //自定义方法
         headlineMapper.selectMyPage(page, portalVo);
 

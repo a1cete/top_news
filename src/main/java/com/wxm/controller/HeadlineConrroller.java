@@ -7,6 +7,9 @@ import com.wxm.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * 头条具体信息
+ */
 @RestController
 @RequestMapping("headline")
 @CrossOrigin
@@ -17,10 +20,9 @@ public class HeadlineConrroller {
     private HeadlineService headlineService;
 
     /**
-     * 实现步骤:
-     * 1. token获取userId [无需校验,拦截器会校验]
-     * 2. 封装headline数据
-     * 3. 插入数据即可
+     * token获取userId
+     * 封装headline数据
+     * 插入数据
      */
     @PostMapping("publish")
     public Result publish(@RequestBody Headline headline, @RequestHeader String token) {
@@ -30,18 +32,21 @@ public class HeadlineConrroller {
         return result;
     }
 
+    //通过头条id获取头条详情
     @PostMapping("findHeadlineByHid")
     public Result findHeadlineByHid(Integer hid) {
         Result result = headlineService.findHeadlineByHid(hid);
         return result;
     }
 
+    //修改头条数据
     @PostMapping("update")
     public Result update(@RequestBody Headline headline) {
         Result result = headlineService.updateHeadLine(headline);
         return result;
     }
 
+    //根据头条id删除头条
     @PostMapping("removeByHid")
     public Result removeById(Integer hid) {
         headlineService.removeById(hid);

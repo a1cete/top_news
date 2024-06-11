@@ -10,11 +10,10 @@ import lombok.Data;
  * @TableName news_user
  */
 @Data
-
 public class User implements Serializable {
     @TableId
     private Integer uid;
-    
+
     private String username;
 
     private String userPwd;

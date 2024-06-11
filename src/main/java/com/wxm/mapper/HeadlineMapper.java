@@ -11,8 +11,6 @@ import java.util.Map;
 /**
  * @author WXM
  * @description 针对表【news_headline】的数据库操作Mapper
- * @createDate 2024-05-10 15:16:35
- * @Entity com.wxm.pojo.Headline
  */
 public interface HeadlineMapper extends BaseMapper<Headline> {
     IPage<Map> selectMyPage(IPage page, @Param("portalVo") PortalVo portalVo);

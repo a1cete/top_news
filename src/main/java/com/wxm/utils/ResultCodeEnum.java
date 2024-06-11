@@ -1,6 +1,7 @@
 package com.wxm.utils;
 
 /**
+ * 信息枚举类
  * 统一返回结果状态信息类
  */
 public enum ResultCodeEnum {

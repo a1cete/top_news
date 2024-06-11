@@ -9,6 +9,10 @@ import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
+
+/**
+ * 根据id生产token
+ */
 @Data
 @Component
 @ConfigurationProperties(prefix = "jwt.token")

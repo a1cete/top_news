@@ -7,6 +7,9 @@ import com.wxm.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * 头条页面属性接口
+ */
 @RestController
 @RequestMapping("portal")
 @CrossOrigin
