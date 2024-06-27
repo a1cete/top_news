@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/top_news_前端.iml" filepath="$PROJECT_DIR$/.idea/top_news_前端.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/vue3-topnews.iml" filepath="$PROJECT_DIR$/.idea/vue3-topnews.iml" />
     </modules>
   </component>
 </project>
